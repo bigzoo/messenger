@@ -1,0 +1,9 @@
+<%= render "layouts/errors", object: @message %>
+
+
+<%= form_for @message do |f| %>
+<%= f.hidden_field :user_id, value:@user.id %>
+<%= f.label :message %>
+<%= f.text_field :message %>
+<%= f.submit %>
+<% end %>
