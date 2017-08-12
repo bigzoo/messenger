@@ -1,0 +1,99 @@
+<div class="wrapper">
+  <div class="filter"></div>
+</div>
+<div class="section profile-content">
+  <div class="container">
+    <div class="owner">
+      <div class="name">
+        <h4 class="title">Anonymous User<br/></h4>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 offset-md-3 text-center">
+        <br/>
+        <%= link_to ("<i class='fa fa-cog'></i>Settings").html_safe, edit_user_registration_path, class:'btn btn-outline-default btn-round'%>
+      </div>
+    </div>
+    <br/>
+    <div class="nav-tabs-navigation">
+      <div class="nav-tabs-wrapper">
+        <ul class="nav nav-tabs" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#recieved" role="tab">Recieved</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#sent" role="tab">Sent</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#favorites" role="tab">Favorites</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!-- Tab panes -->
+    <div class="tab-content following">
+      <div class="tab-pane active" id="recieved" role="tabpanel">
+        <div class="row">
+          <div class="col-md-6 offset-md-3">
+            <ul class="list-unstyled follows">
+              <%if @user.messages.any?%>
+              <% @user.messages.order('id ASC').reorder('created_at DESC').each do |message|%>
+              <li>
+                <div class="row">
+                  <div class="col-md-7 col-xs-4">
+                    <h6><%= message.message%><br/>
+                      <small>Hint: ...
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Age: <%= distance_of_time_in_words(message.created_at, DateTime.current)%></small>
+                    </h6>
+                  </div>
+                </div>
+              </li>
+              <hr/>
+              <% end %>
+              <% @user.messages.each %>
+            <% else %>
+              <h3 class="text-muted">No Messages yet :(</h3>
+              <a href="#">Share this link</a>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="tab-pane text-center" id="sent" role="tabpanel">
+        <h3 class="text-muted">Not following anyone yet :(</h3>
+        <button class="btn btn-warning btn-round">Find Sent</button>
+      </div>
+      <div class="tab-pane text-center" id="favorites" role="tabpanel">
+        <h3 class="text-muted">Not following anyone yet :(</h3>
+        <button class="btn btn-warning btn-round">Find Fav</button>
+      </div>
+    </div>
+  </div>
+</div>
+<footer class="footer section-dark">
+<div class="container">
+  <div class="row">
+    <nav class="footer-nav">
+      <ul>
+        <li>
+          <a href="https://www.creative-tim.com">Creative Tim</a>
+        </li>
+        <li>
+          <a href="http://blog.creative-tim.com">Blog</a>
+        </li>
+        <li>
+          <a href="https://www.creative-tim.com/license">Licenses</a>
+        </li>
+      </ul>
+    </nav>
+    <div class="credits ml-auto">
+      <span class="copyright">
+        © 2017, made with
+        <i class="fa fa-heart heart"></i>
+        by
+        <a target="_blank" href="http://instagram.com/c_h_____">bigzoo</a>
+      </span>
+    </div>
+  </div>
+</div>
+</footer>
