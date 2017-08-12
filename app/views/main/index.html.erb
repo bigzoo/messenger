@@ -1,1 +1,78 @@
-<p>Habari dunia!</p>
+<div class="page-header" data-parallax="true" >
+  <div class="filter"></div>
+  <div class="container">
+    <div class="motto text-center">
+      <h1>Learn More About Yourself</h1>
+      <h3>Join Today!</h3>
+      <br/>
+      <% if user_signed_in? %>
+      <%= link_to 'My Messages', profile_index_path, class:'btn btn-outline-neutral btn-round'%>
+      <% else %>
+      <%= link_to 'Log In', new_user_session_path, class:'btn btn-outline-neutral btn-round'%>
+      <%= link_to 'Sign Up', new_user_registration_path, class:'btn btn-outline-neutral btn-round'%>
+      <% end %>
+    </div>
+  </div>
+</div>
+<div class="main">
+  <div id="contact" class="section landing-section scrollspy">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 offset-md-2">
+          <h2 class="text-center">Have a Suggestion?</h2>
+          <form class="contact-form">
+            <div class="row">
+              <div class="col-md-6">
+                <label>Name</label>
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    <i class="fa fa-user"></i>
+                  </span>
+                  <input type="text" class="form-control" placeholder="Name">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label>Email</label>
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    <i class="fa fa-envelope"></i>
+                  </span>
+                  <input type="text" class="form-control" placeholder="Email">
+                </div>
+              </div>
+            </div>
+            <label>Message</label>
+            <textarea class="form-control" rows="4" placeholder="Tell us your thoughts and feelings..."></textarea>
+            <div class="row">
+              <div class="col-md-4 offset-md-4">
+                <button class="btn btn-danger btn-lg btn-fill">Send Message</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<footer class="footer section-dark">
+  <div class="container">
+    <div class="row">
+      <nav class="footer-nav">
+        <ul>
+          <i class="fa fa-github"></i>
+          <li>
+            <a target="_blank" href="http://github.com/bigzoo/Messenger">Source</a>
+          </li>
+        </ul>
+      </nav>
+      <div class="credits ml-auto">
+        <span class="copyright">
+          © 2017, made with
+          <i class="fa fa-heart heart"></i>
+          by
+          <a target="_blank" href="http://instagram.com/c_h_____">bigzoo</a>
+        </span>
+      </div>
+    </div>
+  </div>
+</footer>
