@@ -1,9 +1,32 @@
 <%= render "layouts/errors", object: @message %>
 
+<div class="wrapper">
+  <div class="page-header" style="background-image: url(<%= asset_path 'login-image.jpg' %>);">
+    <div class="filter"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 offset-lg-4 col-sm-6 offset-sm-3">
+          <div class="card card-register">
+            <h3 class="title">To: '<%= @user.username%>'</h3>
+            <%= form_for @message, class:'register-form' do |f|  %>
+            <%= f.hidden_field :user_id, value:@user.id %>
+            <%= f.label "Say Something Constructive." %><br/>
+            <%= f.text_area :message, autofocus: true, class:'form-control', required:'required', rows:'8', placeholder:'I really like your eyes.' %>
+            <%= f.label "Give a Hint On Who You Are(optional)" %><br/>
+            <%= f.text_field :hint, class:'form-control', placeholder:'You first boyfriend.' %>
 
-<%= form_for @message do |f| %>
-<%= f.hidden_field :user_id, value:@user.id %>
-<%= f.label :message %>
-<%= f.text_field :message %>
-<%= f.submit %>
-<% end %>
+            <%= f.submit "Send" ,class:"btn btn-danger btn-block btn-round"%>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="footer register-footer text-center">
+        <h6>&copy; 2017, made with
+          <i class="fa fa-heart heart"></i>
+          by
+          <a target="_blank" href="http://instagram.com/c_h_____">bigzoo</a>
+        </h6>
+      </div>
+    </div>
+  </div>
+</div>
