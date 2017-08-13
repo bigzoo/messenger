@@ -1,5 +1,8 @@
-<% content_for(:title) do%>Private Messenger | <%=@user.username%><% end%>
-<% content_for(:description) do%>Send <%=@user.username%> a Private Message Today!<%end%>
+<% content_for(:title) do%>Private Messenger |
+<%=@user.username%><% end%>
+<% content_for(:description) do%>Send
+<%=@user.username%>
+a Private Message Today!<%end%>
 <% content_for(:metas) do%>
 <!-- Twitter Card data -->
 <meta name="twitter:card" content="summary">
@@ -10,11 +13,62 @@
 <meta name="twitter:image" content="<%= asset_path 'private.jpg' %>">
 
 <!-- Open Graph data -->
-<meta property="og:title" content="Private Messenger | <%=@user.username%>" />
-<meta property="og:type" content="article" />
-<meta property="og:image" content="<%= asset_path 'private.jpg' %>" />
-<meta property="og:description" content="Send <%= @user.username%> a Private Message Today!" />
-<meta property="og:site_name" content="Private Messenger" />
+<meta property="og:title" content="Private Messenger | <%=@user.username%>"/>
+<meta property="og:type" content="article"/>
+<meta property="og:image" content="<%= asset_path 'private.jpg' %>"/>
+<meta property="og:description" content="Send <%= @user.username%> a Private Message Today!"/>
+<meta property="og:site_name" content="Private Messenger"/>
 <%end%>
-<br>
+<% if @user.username == 'User Not Found'%>
+<div class="wrapper">
+  <div class="page-header" style="background-image: url(<%= asset_path 'login-image.jpg' %>);">
+    <div class="filter"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 offset-lg-4 col-sm-6 offset-sm-3">
+          <div class="card card-register">
+            <h3 class="title">No User Was Found.</h3>
+            <h5 class="title">I'll put a Search here soon.</h5>
+          </div>
+        </div>
+      </div>
+      <div class="footer register-footer text-center">
+        <h6>&copy; 2017, made with
+          <i class="fa fa-heart heart"></i>
+          by
+          <a target="_blank" href="http://instagram.com/c_h_____">bigzoo</a>
+        </h6>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% else %>
+<%if @user.public_messages%>
 <%= render 'messages/form'%>
+<% elsif user_signed_in?%>
+<%= render 'messages/form'%>
+<% else%>
+<div class="wrapper">
+  <div class="page-header" style="background-image: url(<%= asset_path 'login-image.jpg' %>);">
+    <div class="filter"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 offset-lg-4 col-sm-6 offset-sm-3">
+          <div class="card card-register">
+            <h3 class="title">You Have to be logged in to send a message to this user.</h3>
+          </div>
+        </div>
+      </div>
+      <div class="footer register-footer text-center">
+        <h6>&copy; 2017, made with
+          <i class="fa fa-heart heart"></i>
+          by
+          <a target="_blank" href="http://instagram.com/c_h_____">bigzoo</a>
+        </h6>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>
+<% end %>
