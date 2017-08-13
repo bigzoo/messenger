@@ -21,6 +21,17 @@ class MessagesController < ApplicationController
     end
   end
 
+  def favorite
+    @message = Message.find(params[:message])
+    @message.toggle! :favorite
+    if @message.favorite == false
+      flash[:alert]= 'Favorite Removed Succesfully'
+    else
+      flash[:notice]= 'Favorite Added Succesfully'
+    end
+    redirect_to profile_index_path
+  end
+
   private
   def message_params
     sender_id_h = {sender_id:current_user.id} if user_signed_in?
