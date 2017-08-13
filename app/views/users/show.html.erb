@@ -1,3 +1,20 @@
-<%= @user.email%>
+<% content_for(:title) do%>Private Messenger | <%=@user.username%><% end%>
+<% content_for(:description) do%>Send <%=@user.username%> a Private Message Today!<%end%>
+<% content_for(:metas) do%>
+<!-- Twitter Card data -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="Private Messenger">
+<meta name="twitter:title" content="Private Messenger | <%=@user.username%>">
+<meta name="twitter:description" content="Send <%= @user.username%> a Private Message Today!">
+<meta name="twitter:creator" content="Private Messenger">
+<meta name="twitter:image" content="<%= asset_path 'private.jpg' %>">
+
+<!-- Open Graph data -->
+<meta property="og:title" content="Private Messenger | <%=@user.username%>" />
+<meta property="og:type" content="article" />
+<meta property="og:image" content="<%= asset_path 'private.jpg' %>" />
+<meta property="og:description" content="Send <%= @user.username%> a Private Message Today!" />
+<meta property="og:site_name" content="Private Messenger" />
+<%end%>
 <br>
 <%= render 'messages/form'%>
