@@ -1,20 +1,20 @@
-<% content_for(:title) do%>Private Messenger | <%=@user.username%><% end%>
-<% content_for(:description) do%>Send <%=@user.username%> a Private Message Today!<%end%>
+<% content_for(:title) do%>Private Messenger<% end%>
+<% content_for(:description) do%>Send a Private Message Today!<%end%>
 <% content_for(:metas) do%>
 <!-- Twitter Card data -->
 <meta name="twitter:card" content="summary">
 <meta name="twitter:site" content="Private Messenger">
-<meta name="twitter:title" content="Private Messenger | <%=@user.username%>">
-<meta name="twitter:description" content="Send <%= @user.username%> a Private Message Today!">
+<meta name="twitter:title" content="Private Messenger">
+<meta name="twitter:description" content="Send a Private Message Today!">
 <meta name="twitter:creator" content="Private Messenger">
 <meta name="twitter:image" content="<%= asset_path 'private.jpg' %>">
 
 <!-- Open Graph data -->
-<meta property="og:title" content="Private Messenger | <%=@user.username%>" />
-<meta property="og:type" content="article" />
-<meta property="og:image" content="<%= asset_path 'private.jpg' %>" />
-<meta property="og:description" content="Send <%= @user.username%> a Private Message Today!" />
-<meta property="og:site_name" content="Private Messenger" />
+<meta property="og:title" content="Private Messenger"/>
+<meta property="og:type" content="article"/>
+<meta property="og:image" content="<%= asset_path 'private.jpg' %>"/>
+<meta property="og:description" content="Send a Private Message Today!"/>
+<meta property="og:site_name" content="Private Messenger"/>
 <%end%>
 <div class="wrapper">
   <div class="filter"></div>
@@ -60,35 +60,111 @@
                 <div class="row">
                   <div class="col-md-7 col-xs-4">
                     <h6><%= message.message%><br/>
-                      <small>Hint: ...
-                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Age: <%= distance_of_time_in_words(message.created_at, DateTime.current)%></small>
+                      <small>
+                        <%if message.hint%>
+                        <%= message.hint%>
+                        <%else%>
+                        No Hint :(
+                        <%end%>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Age:
+                        <%= distance_of_time_in_words(message.created_at, DateTime.current)%></small>
+                      <%= link_to "<i class='fa fa-heart' aria-hidden='true'></i>".html_safe, favorite_path(message:message.id)%>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      <%= link_to "<i class='fa fa-trash-o' aria-hidden='true'></i>".html_safe, message_path(message), data:{confirm:'Are You Sure You Want To Delete It?'}, method:'delete'%>
                     </h6>
                   </div>
                 </div>
               </li>
               <hr/>
               <% end %>
-              <% @user.messages.each %>
             <% else %>
-              <h3 class="text-muted">No Messages yet :(</h3>
-              <a href="#">Share this link</a>
+            <div class="text-center">
+              <h3 class="text-muted"><a href="<%=root_path%><%=@user.username%>"><%=root_path%><%=@user.username%></a></h3>
+              <a target="_blank" href="<%=root_path%><%=@user.username%>" class="btn btn-warning btn-round"><i class="fa fa-share-alt"></i>Share Link Now</a>
+            </div>
               <% end %>
             </ul>
           </div>
         </div>
       </div>
       <div class="tab-pane text-center" id="sent" role="tabpanel">
-        <h3 class="text-muted">Not following anyone yet :(</h3>
-        <button class="btn btn-warning btn-round">Find Sent</button>
+        <div class="row">
+          <div class="col-md-6 offset-md-3">
+            <ul class="list-unstyled follows">
+              <%if @sent.any?%>
+              <% @sent.order('id ASC').reorder('created_at DESC').each do |message|%>
+              <li>
+                <div class="row">
+                  <div class="col-md-7 col-xs-4">
+                    <h6><%= message.message%><br/>
+                      <small>
+                        <%if message.hint%>
+                        <%= message.hint%>
+                        <%else%>
+                        No Hint :(
+                        <%end%>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Age:
+                        <%= distance_of_time_in_words(message.created_at, DateTime.current)%>
+                      </small>
+                      <%= link_to "<i class='fa fa-heart' aria-hidden='true'></i>".html_safe, favorite_path(message:message.id)%>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      <%= link_to "<i class='fa fa-trash-o' aria-hidden='true'></i>".html_safe, message_path(message), data:{confirm:'Are You Sure You Want To Delete It?'}, method:'delete'%>
+                    </h6>
+                  </h6>
+                </div>
+              </div>
+            </li>
+            <hr/>
+            <% end %>
+          <% else %>
+            <h3 class="text-muted">No Messages Sent yet :(</h3>
+            <a data-toggle="tab" href="#recieved" role="tab" class="btn btn-warning btn-round">Send One</a>
+            <% end %>
+          </ul>
+        </div>
       </div>
-      <div class="tab-pane text-center" id="favorites" role="tabpanel">
-        <h3 class="text-muted">Not following anyone yet :(</h3>
-        <button class="btn btn-warning btn-round">Find Fav</button>
+    </div>
+    <div class="tab-pane text-center" id="favorites" role="tabpanel">
+      <div class="row">
+        <div class="col-md-6 offset-md-3">
+          <ul class="list-unstyled follows">
+            <%if @favorites.any?%>
+            <% @favorites.order('id ASC').reorder('created_at DESC').each do |message|%>
+            <li>
+              <div class="row">
+                <div class="col-md-7 col-xs-4">
+                  <h6><%= message.message%><br/>
+                    <small>
+                      <%if message.hint%>
+                      <%= message.hint%>
+                      <%else%>
+                      No Hint :(
+                      <%end%>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Age:
+                      <%= distance_of_time_in_words(message.created_at, DateTime.current)%>
+                    </small>
+                    <%= link_to "<i class='fa fa-heart' aria-hidden='true'></i>".html_safe, favorite_path(message:message.id)%>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <%= link_to "<i class='fa fa-trash-o' aria-hidden='true'></i>".html_safe, message_path(message), data:{confirm:'Are You Sure You Want To Delete It?'}, method:'delete'%>
+                  </h6>
+                </h6>
+              </div>
+            </div>
+          </li>
+          <hr/>
+          <% end %>
+        <% else %>
+          <h3 class="text-muted">No Favorites yet :(</h3>
+          <a data-toggle="tab" href="#recieved" role="tab" class="btn btn-warning btn-round">Add One</a>
+          <% end %>
+        </ul>
       </div>
+    </div>
     </div>
   </div>
 </div>
-<footer class="footer section-dark">
+</div>
+<!-- <footer class="footer section-dark">
 <div class="container">
   <div class="row">
     <nav class="footer-nav">
@@ -114,4 +190,4 @@
     </div>
   </div>
 </div>
-</footer>
+</footer> -->
