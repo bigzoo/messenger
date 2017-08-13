@@ -23,13 +23,17 @@
   <div class="container">
     <div class="owner">
       <div class="name">
+        <% if @user.full_name && @user.full_name!='' %>
+        <h4 class="title"><%= @user.full_name%><br/></h4>
+        <% else%>
         <h4 class="title">Anonymous User<br/></h4>
+        <% end %>
       </div>
     </div>
     <div class="row">
       <div class="col-md-6 offset-md-3 text-center">
         <br/>
-        <%= link_to ("<i class='fa fa-cog'></i>Settings").html_safe, edit_user_registration_path, class:'btn btn-outline-default btn-round'%>
+        <%= link_to ("<i class='fa fa-cog'></i>Settings").html_safe, settings_path, class:'btn btn-outline-default btn-round'%>
       </div>
     </div>
     <br/>
