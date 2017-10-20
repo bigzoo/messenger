@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   get "/favorite" => "messages#favorite", :as => :favorite
   get "/profile/settings" => "profile#settings", :as => :settings
   resources :messages, only: [:create, :destroy]
+  get '/explore', to: 'explore#index'
+  get '/explore/:name', to: 'explore#search'
   get '/:username', to: 'users#show'
   # resources :users, only: :show
 end

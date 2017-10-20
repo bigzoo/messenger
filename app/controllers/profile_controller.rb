@@ -3,6 +3,9 @@ class ProfileController < ApplicationController
   def index
     @sent = Message.where(sender_id:current_user.id)
     @user = User.find(current_user.id)
-    @favorites = @user.messages.where(favorite:true)  
+    @favorites = @user.messages.where(favorite:true)
+  end
+  def settings
+    render :settings
   end
 end
